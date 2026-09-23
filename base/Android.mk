@@ -14,14 +14,16 @@
 
 ifneq ($(findstring exynos, $(TARGET_SOC_NAME)), $(findstring s5e, $(TARGET_SOC_NAME)))
 build_dirs :=  \
-    libhwjpeg  \
     libfimg    \
-    libscaler  \
     libacryl \
     libmpp \
     libmemtrack \
-    giantmscl \
     libdrmresource
+
+# libhwjpeg, libexynosscaler and libgiantmscl are provided by stock blobs
+ifneq ($(TARGET_USES_PREBUILT_EXYNOS_BSP_LIBS),true)
+build_dirs += libhwjpeg libscaler giantmscl
+endif
 
 ifdef BOARD_HWC_VERSION
 build_dirs += $(BOARD_HWC_VERSION)
